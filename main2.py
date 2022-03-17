@@ -10,6 +10,7 @@ from flask_login import LoginManager, login_user, current_user, logout_user, \
     login_required
 from flask_restful import Api
 import datetime
+import os
 
 app = Flask(__name__)
 api = Api(app)
@@ -187,7 +188,8 @@ def main():
     app.register_blueprint(news_api.blueprint)
     api.add_resource(NewsResource, '/api/v2/news/<int:news_id>')
     api.add_resource(NewsListResource, '/api/v2/news')
-    app.run()
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host='0.0.0.0', port=port)
 
 
 if __name__ == '__main__':
